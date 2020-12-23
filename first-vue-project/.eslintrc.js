@@ -17,6 +17,7 @@ module.exports = {
 		"indent": [
 			"error",
 			"tab"
-	],
+		],
+		"linebreak-style": 0,
 	},
 };
