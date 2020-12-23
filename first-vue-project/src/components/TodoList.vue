@@ -3,7 +3,8 @@
 		<ul>
 			<TodoItem
 				v-on:removeTodo="removeTodo"
-				v-for="todo of todos"
+				v-for="(todo, i) of todos"
+				:index="i"
 				:todo="todo"
 				:key="todo.id"
 			/>
