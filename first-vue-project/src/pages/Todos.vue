@@ -6,39 +6,46 @@
 		<AddTodo
 			@addTodo="addTodo"
 		/>
+		<Loader v-if="loading" />
 		<TodoList
+			v-else-if="todos.length"
 			v-bind:todos="todos"
 			@removeTodo="removeTodo"
 		/>
+		<p v-else>
+			Seems like you've done everything. If you are feeling productive today,
+			you can add a few more todos using the form above
+		</p>
 	</div>
 </template>
 
 <script>
 import TodoList from '@/components/TodoList.vue';
 import AddTodo from '@/components/AddTodo.vue';
+import Loader from '@/components/Loader.vue';
 
 export default {
 	name: 'App',
 	data() {
 		return {
-			todos: [
-				{ id: 1, title: 'Explore VueJS', completed: false },
-				{ id: 2, title: 'Make todo app', completed: false },
-				{ id: 3, title: 'Have a cup of coffee', completed: false },
-				{ id: 4, title: 'Enjoy the rest of the day', completed: false },
-			],
+			todos: [],
+			loading: true,
 		};
 	},
 	mounted() {
 		fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
 			.then((response) => response.json())
 			.then((json) => {
-				this.todos = json;
+				setTimeout(() => {
+					this.todos = json;
+					this.loading = false;
+				}, 1000);
 			});
 	},
 	components: {
 		TodoList,
 		AddTodo,
+		Loader,
 	},
 	methods: {
 		removeTodo(id) {
